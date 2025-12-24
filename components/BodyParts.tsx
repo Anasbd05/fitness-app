@@ -1,14 +1,8 @@
 import { LinearGradient } from "expo-linear-gradient";
 import { useRouter } from "expo-router";
 import React from "react";
-import {
-  FlatList,
-  Image,
-  ScrollView,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
+import Animated, { FadeInDown } from "react-native-reanimated";
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
@@ -18,7 +12,7 @@ import { bodyParts } from "../assets/index";
 
 export default function BodyParts() {
   return (
-    <ScrollView style={tw`mx-4`}>
+    <View style={tw`mx-4`}>
       <Text style={[tw`font-semibold text-neutral-700 `, { fontSize: hp(3) }]}>
         Exercises
       </Text>
@@ -30,16 +24,20 @@ export default function BodyParts() {
         showsVerticalScrollIndicator={false}
         columnWrapperStyle={{ justifyContent: "space-between" }}
         contentContainerStyle={{ paddingBottom: 50, paddingTop: 20 }}
-        renderItem={({ item }) => <BodyPartCard item={item} />}
+        renderItem={({ item, index }) => <BodyPartCard item={item} />}
       />
-    </ScrollView>
+    </View>
   );
 }
 
-const BodyPartCard = ({ item }: any) => {
+const BodyPartCard = ({ item, index }: any) => {
   const router = useRouter();
   return (
-    <View>
+    <Animated.View
+      entering={FadeInDown.duration(400)
+        .delay(index + 200)
+        .springify()}
+    >
       <TouchableOpacity
         onPress={() => router.push({ pathname: "/Exercises", params: item })}
         style={[
@@ -70,6 +68,6 @@ const BodyPartCard = ({ item }: any) => {
           {item.name}
         </Text>
       </TouchableOpacity>
-    </View>
+    </Animated.View>
   );
 };

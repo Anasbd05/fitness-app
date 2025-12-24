@@ -1,7 +1,7 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { Image, Text, View } from "react-native";
+import { Image, ScrollView, Text, View } from "react-native";
 import { heightPercentageToDP as hp } from "react-native-responsive-screen";
 import { SafeAreaView } from "react-native-safe-area-context";
 import tw from "twrnc";
@@ -50,13 +50,15 @@ export default function home() {
 
       {/* image slider */}
 
-      <View>
-        <ImageSlider />
-      </View>
+      <ScrollView>
+        <View>
+          <ImageSlider />
+        </View>
 
-      <View style={tw`flex-1 `}>
-        <BodyParts />
-      </View>
+        <View style={tw`flex-1 `}>
+          <BodyParts />
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }

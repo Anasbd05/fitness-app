@@ -11,6 +11,15 @@ export default function RootLayout() {
           presentation: "fullScreenModal",
         }}
       />
+      <Stack.Screen
+        name="ExerciseDetails"
+        options={{
+          title: "PokemonDetails",
+          headerBackButtonDisplayMode: "minimal",
+          presentation: "formSheet",
+          sheetAllowedDetents: [0.9, 1],
+        }}
+      />
     </Stack>
   );
 }

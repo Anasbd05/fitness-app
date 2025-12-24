@@ -1,13 +1,15 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
+import axios from "axios";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from "react-native-responsive-screen";
 import tw from "twrnc";
+import ExerciceList from "../components/ExerciceList";
 
 export default function Exercises() {
   const router = useRouter();
@@ -15,28 +17,28 @@ export default function Exercises() {
   const [exercice, setExercice] = useState([]);
   const item = useLocalSearchParams();
 
-  //   const fetchExercice = async () => {
-  //     const options = {
-  //       method: "GET",
-  //       url: "https://exercisedb.p.rapidapi.com/exercises/targetList",
-  //       headers: {
-  //         "x-rapidapi-key": "8cde7de499msh9886fdc96435e68p15bd6fjsnfef09ee74337",
-  //         "x-rapidapi-host": "exercisedb.p.rapidapi.com",
-  //       },
-  //     };
+  const fetchExercice = async () => {
+    const options = {
+      method: "GET",
+      url: `https://exercisedb.p.rapidapi.com/exercises/bodyPart/${item.name}`,
+      headers: {
+        "x-rapidapi-key": "8cde7de499msh9886fdc96435e68p15bd6fjsnfef09ee74337",
+        "x-rapidapi-host": "exercisedb.p.rapidapi.com",
+      },
+    };
 
-  //     try {
-  //       const response = await axios.request(options);
-  //       const data = response.data;
-  //       setExercice(data);
-  //     } catch (error) {
-  //       console.error(error);
-  //     }
-  //   };
+    try {
+      const response = await axios.request(options);
+      const data = response.data;
+      setExercice(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-  //   useEffect(() => {
-  //     fetchExercice();
-  //   }, []);
+  useEffect(() => {
+    fetchExercice();
+  }, []);
 
   return (
     <ScrollView>
@@ -71,7 +73,9 @@ export default function Exercises() {
         >
           {item.name} exercises
         </Text>
-        <View style={tw`mb-10`}></View>
+        <View style={tw`mb-10`}>
+          <ExerciceList data={exercice} />
+        </View>
       </View>
     </ScrollView>
   );
